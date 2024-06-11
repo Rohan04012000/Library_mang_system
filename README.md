@@ -32,8 +32,29 @@ http://0.0.0.0:8000 this part is the url which server provides, http://0.0.0.0:8
     "isbn":"1-86092-022-5"
 }
 The keys of the JSON should be fixed, whereas the values can change. This will upload the Book if it already does not exist.
+And returns the details of book with an additional column as book_id, which is unique for every book.
 
-# End
+# Endpoint for Registering a Student.
+http://0.0.0.0:8000/students/
+
+Enter this endpoint in Postman with the method set to POST, and in the body, enter the details in JSON format as: {
+    "first_name": "Aarohan",
+    "last_name": "Iyer",
+    "class_name": "8th B",
+    "email": "iyer@gmail.com",
+    "phone": "7723658712"
+}
+The keys should be fixed, and the values can change. This will register the student if the student does not already exist. 
+It will return the details of the student with an additional column as student_id, which will be unique for every student.
+
+# Endpoint for updating Inventory.
+
+
+
+
+
+
+
 
 
 
