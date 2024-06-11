@@ -1,5 +1,5 @@
 # Library_mang_system
-This project was developed using PyCharm, Python, and FastAPI. PyCharm provides a virtual environment.
+This project was developed using PyCharm, Python, and FastAPI. For Database SQLAlchemy is used. PyCharm provides a virtual environment.
 
 # Method 1 - How to use the project.
 1. Create a virtual environment, load the library_data.py file, the pyproject.toml file, and the poetry.lock file.
@@ -20,3 +20,24 @@ This project was developed using PyCharm, Python, and FastAPI. PyCharm provides 
 10. Now, we need to start the server
 11. In terminal: poetry run uvicorn library_data:app --reload
 12. This starts the server and provides an URL, use that URL to access all Endpoints of project through Postman.
+
+# Endpoint for Adding New Book.
+http://0.0.0.0:8000/books/
+
+http://0.0.0.0:8000 this part is the url which server provides, http://0.0.0.0:8000/books/  This endpoint should be entered in Postman with the method set to POST. Then, in the body, enter the details of a book, such as: {
+    "title":"A Boy at Seven",
+    "author":"John",
+    "publisher":"Pearson Publication",
+    "published_year": 1893,
+    "isbn":"1-86092-022-5"
+}
+The keys of the JSON should be fixed, whereas the values can change. This will upload the Book if it already does not exist.
+
+# End
+
+
+
+
+
+
+
