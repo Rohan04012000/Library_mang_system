@@ -1,5 +1,5 @@
 # Library_mang_system
-This project was developed using PyCharm, Python, and FastAPI. For Database SQLAlchemy is used. PyCharm provides a virtual environment.
+This project was developed using PyCharm, Python, FastAPI, Pydantic, and Poetry. For Database SQLAlchemy is used. PyCharm provides a virtual environment.
 
 # Method 1 - How to use the project.
 1. Create a virtual environment, load the library_data.py file, the pyproject.toml file, and the poetry.lock file.
@@ -24,7 +24,8 @@ This project was developed using PyCharm, Python, and FastAPI. For Database SQLA
 # Endpoint for Adding New Book.
 http://0.0.0.0:8000/books/
 
-http://0.0.0.0:8000 this part is the url which server provides, http://0.0.0.0:8000/books/  This endpoint should be entered in Postman with the method set to POST. Then, in the body, enter the details of a book, such as: {
+http://0.0.0.0:8000 this part is the url which server provides, http://0.0.0.0:8000/books/  This endpoint should be entered in Postman with the method set to POST. Navigate to the body tab, select raw and choose json from the dropdown menu.
+Enter the following JSON object into the body section: {
     "title":"A Boy at Seven",
     "author":"John",
     "publisher":"Pearson Publication",
@@ -32,12 +33,13 @@ http://0.0.0.0:8000 this part is the url which server provides, http://0.0.0.0:8
     "isbn":"1-86092-022-5"
 }
 The keys of the JSON should be fixed, whereas the values can change. This will upload the Book if it already does not exist.
-And returns the details of book with an additional column as book_id, which is unique for every book.
+And returns the details of book with an additional column as book_id, which is unique for every book ranging from 1 to N.
 
 # Endpoint for Registering a Student.
 http://0.0.0.0:8000/students/
 
-Enter this endpoint in Postman with the method set to POST, and in the body, enter the details in JSON format as: {
+Enter this endpoint in Postman with the method set to POST, Navigate to the body tab, select raw and choose json from the dropdown menu.
+Enter the following JSON object into the body section: {
     "first_name": "Aarohan",
     "last_name": "Iyer",
     "class_name": "8th B",
@@ -45,9 +47,97 @@ Enter this endpoint in Postman with the method set to POST, and in the body, ent
     "phone": "7723658712"
 }
 The keys should be fixed, and the values can change. This will register the student if the student does not already exist. 
-It will return the details of the student with an additional column as student_id, which will be unique for every student.
+It will return the details of the student with an additional column as student_id, which will be unique for every student ranging from 1 to N.
 
 # Endpoint for updating Inventory.
+http://0.0.0.0:8000/inventory/
+
+Enter the above endpoint and set the HTTP method to POST. Navigate to the body tab, select raw and choose json from the dropdown menu.
+Enter the following JSON object into the body section: {
+    "book_id": 5,
+    "total_copies": 200,
+    "available_copies": 200
+}
+The book_id is the ID generated when a new book was added to the system. You need to specify the book ID for the book you want to update. While the keys in this JSON object are fixed, the values can be changed as needed.
+
+# Endpoint for issuing and returning a book.
+http://0.0.0.0:8000/transactions/
+
+Enter the above endpoint and set the HTTP method to POST. Navigate to the body tab, select raw and choose json from the dropdown menu.
+<center>Note 1:</center> 
+<u>Enter the following JSON object into the body section for issuing a book: </u>
+{
+    "student_id":5,
+    "book_id":12,
+    "issue_date":"2021-06-09"
+}
+The student_id is the ID generated for a student when they registered with the system. Entering the student_id indicates which student is issuing the book, and entering the book_id indicates which book is being issued. Since the student is issuing the book, only the issue_date needs to be entered.
+<center>Note 2:</center>
+<u>Enter the following JSON object into the body section for issuing a book:</u>
+{
+    "student_id":5,
+    "book_id":12,
+    "return_date":"2021-06-28"
+}
+ Since the student is returning the book, only the return_date needs to be entered.
+
+ <u>Important:</u>Both requests will automatically update the inventory, either increasing or decreasing the available copies of the book that is being issued or returned.
+
+ <u>When both issue_date and return_date are entered, it will raise an HTTPException.</u>
+
+ # Endpoint for finding top five popular books.
+ http://0.0.0.0:8000/five_popular_books/
+
+Set the method to GET and send the request to the above URL. It will return the top 5 popular books with their book_id, book_title, and no_of_times_issued.
+
+#Additional endpoint which should be sent with method set to GET.
+1. For listing first 10 updated books:  http://0.0.0.0:8000/books_records/
+2. For listing first 10 registered students: http://0.0.0.0:8000/students_records/
+3. For listing the first 10 records of Inventory table: http://0.0.0.0:8000/inventory_records/
+4. For listing the first 10 records of Transaction table, which holds the details about issue and return of a book: http://0.0.0.0:8000/transactions_records/
+
+#Information about the tables used:
+1. <u>Details of table_name "books":</u>
+   book_id = Column(Integer, primary_key = True, index = True)  --> This is set to primary Key and it will auto-increment, and it should be noted whenever a book is registed/updated into library system.
+   title = Column(String, index = True)
+   author = Column(String, index = True)
+   publisher = Column(String, index = True)
+   published_year = Column(Integer, index = True)
+   isbn = Column(String, index = True)
+
+2. <u>Details of table_name "students":</u>
+   student_id = Column(Integer, primary_key = True, index = True)
+   first_name = Column(String, index = True)
+   last_name = Column(String, index = True)
+   class_name = Column(String, index = True)
+   email = Column(String, index = True)
+   phone = Column(String, index = True)
+
+3. <u>Details of table_name "inventory":</u>
+   inventory_id = Column(Integer, primary_key = True, index = True)
+   book_id = Column(Integer, ForeignKey('books.book_id')) --> In inventory table, a column which is linked to books.book_id column. And it is one-to-one relation.
+   total_copies = Column(Integer, index = True)
+   available_copies = Column(Integer, index = True)
+   book = relationship("Book") -->  Making a relationship in Inventory model with Book model.
+
+4. <u>Details of table_name "transactions":</u>
+   transaction_id = Column(Integer, primary_key = True, index = True)
+   student_id = Column(Integer, ForeignKey('students.student_id'))
+   book_id = Column(Integer, ForeignKey('books.book_id'))
+   issue_date = Column(String)
+   return_date = Column(String, nullable = True)
+   student = relationship("Student") -->This table has relationship with Student.
+   book = relationship("Book") -->Also has relationship with Book.
+
+
+
+
+
+
+
+
+ 
+
 
 
 
