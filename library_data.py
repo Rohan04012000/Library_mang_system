@@ -68,7 +68,6 @@ class Transaction(Base):
 # Create the tables
 Base.metadata.create_all(bind = engine)
 
-
 # Define Pydantic models
 #BookCreate model is used to validate the type of data entered through json request.
 class BookCreate(BaseModel):
@@ -337,7 +336,6 @@ def get_popular_books(db: Session = Depends(get_db)):
 
     return response
 
-
 # Endpoint to clear records of all tables.
 @app.delete("/clear-all-tables/")
 def clear_all_tables(db: Session = Depends(get_db)):
@@ -373,7 +371,6 @@ def read_inventory(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)
 def read_transactions(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     transaction_all = db.query(Transaction).offset(skip).limit(limit).all()
     return transaction_all
-
 
 if __name__ == "__main__":
     import uvicorn
