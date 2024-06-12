@@ -25,13 +25,15 @@ This project was developed using PyCharm, Python, FastAPI, Pydantic, and Poetry.
 http://0.0.0.0:8000/books/
 
 http://0.0.0.0:8000 this part is the url which server provides, http://0.0.0.0:8000/books/  This endpoint should be entered in Postman with the method set to POST. Navigate to the body tab, select raw and choose json from the dropdown menu.
-Enter the following JSON object into the body section: {
+Enter the following JSON object into the body section: 
+'''json
+{
     "title":"A Boy at Seven",
     "author":"John",
     "publisher":"Pearson Publication",
     "published_year": 1893,
     "isbn":"1-86092-022-5"
-}
+}'''
 The keys of the JSON should be fixed, whereas the values can change. This will upload the Book if it already does not exist.
 And returns the details of book with an additional column as book_id, which is unique for every book ranging from 1 to N.
 
@@ -39,13 +41,15 @@ And returns the details of book with an additional column as book_id, which is u
 http://0.0.0.0:8000/students/
 
 Enter this endpoint in Postman with the method set to POST, Navigate to the body tab, select raw and choose json from the dropdown menu.
-Enter the following JSON object into the body section: {
+Enter the following JSON object into the body section: 
+'''json
+{
     "first_name": "Aarohan",
     "last_name": "Iyer",
     "class_name": "8th B",
     "email": "iyer@gmail.com",
     "phone": "7723658712"
-}
+}'''
 The keys should be fixed, and the values can change. This will register the student if the student does not already exist. 
 It will return the details of the student with an additional column as student_id, which will be unique for every student ranging from 1 to N.
 
@@ -53,11 +57,13 @@ It will return the details of the student with an additional column as student_i
 http://0.0.0.0:8000/inventory/
 
 Enter the above endpoint and set the HTTP method to POST. Navigate to the body tab, select raw and choose json from the dropdown menu.
-Enter the following JSON object into the body section: {
+Enter the following JSON object into the body section: 
+'''json
+{
     "book_id": 5,
     "total_copies": 200,
     "available_copies": 200
-}
+}'''
 The book_id is the ID generated when a new book was added to the system. You need to specify the book ID for the book you want to update. While the keys in this JSON object are fixed, the values can be changed as needed.
 
 # Endpoint for issuing and returning a book.
@@ -66,19 +72,21 @@ http://0.0.0.0:8000/transactions/
 Enter the above endpoint and set the HTTP method to POST. Navigate to the body tab, select raw and choose json from the dropdown menu.
 <center>Note 1:</center> 
 <u>Enter the following JSON object into the body section for issuing a book: </u>
+'''yaml
 {
     "student_id":5,
     "book_id":12,
     "issue_date":"2021-06-09"
-}
+}'''
 The student_id is the ID generated for a student when they registered with the system. Entering the student_id indicates which student is issuing the book, and entering the book_id indicates which book is being issued. Since the student is issuing the book, only the issue_date needs to be entered.
 <center>Note 2:</center>
 <u>Enter the following JSON object into the body section for issuing a book:</u>
+'''yaml
 {
     "student_id":5,
     "book_id":12,
     "return_date":"2021-06-28"
-}
+}'''
  Since the student is returning the book, only the return_date needs to be entered.
 
  <u>Important:</u>Both requests will automatically update the inventory, either increasing or decreasing the available copies of the book that is being issued or returned.
