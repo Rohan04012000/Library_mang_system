@@ -1,5 +1,5 @@
 # Library_mang_system
-This project was developed using PyCharm, Python, FastAPI, Pydantic, and Poetry. For Database SQLAlchemy is used. PyCharm provides a virtual environment.
+This project was developed using PyCharm, Python, FastAPI, Pydantic, and Poetry. For Database SQLAlchemy is used. PyCharm provides a virtual environment!.
 
 # Method 1 - How to use the project.
 1. Create a virtual environment, load the library_data.py file, the pyproject.toml file, and the poetry.lock file.
